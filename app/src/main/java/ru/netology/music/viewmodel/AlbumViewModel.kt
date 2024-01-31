@@ -45,7 +45,8 @@ class AlbumViewModel : ViewModel() {
                 response.use {
                     if (!response.isSuccessful) throw IOException("Unexpected code $response")
                     val album = gson.fromJson(response.body!!.string(), Album::class.java)
-                    _data.postValue(parseAlbum(album))
+                    feedItems = parseAlbum(album)
+                    _data.postValue(feedItems)
                 }
             }
         })
