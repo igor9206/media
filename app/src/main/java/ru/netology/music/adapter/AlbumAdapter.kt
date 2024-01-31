@@ -12,7 +12,15 @@ import ru.netology.music.model.AlbumItem
 import ru.netology.music.model.FeedItem
 import ru.netology.music.model.TrackItem
 
-class AlbumAdapter : ListAdapter<FeedItem, RecyclerView.ViewHolder>(FeedItemCallBack()) {
+interface OnClickListener {
+    fun play(trackItem: TrackItem?)
+    fun next()
+    fun previous()
+}
+
+class AlbumAdapter(
+    private val onClickListener: OnClickListener
+) : ListAdapter<FeedItem, RecyclerView.ViewHolder>(FeedItemCallBack()) {
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
@@ -30,13 +38,13 @@ class AlbumAdapter : ListAdapter<FeedItem, RecyclerView.ViewHolder>(FeedItemCall
                     parent,
                     false
                 )
-                AlbumVH(binding)
+                AlbumVH(binding, onClickListener)
             }
 
             R.layout.card_track -> {
                 val binding =
                     CardTrackBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                TrackVH(binding)
+                TrackVH(binding, onClickListener)
             }
 
             else -> error("unknown item type")
@@ -55,7 +63,8 @@ class AlbumAdapter : ListAdapter<FeedItem, RecyclerView.ViewHolder>(FeedItemCall
 }
 
 class AlbumVH(
-    private val binding: CardHeaderAlbumBinding
+    private val binding: CardHeaderAlbumBinding,
+    private val onClickListener: OnClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(albumItem: AlbumItem) {
         with(binding) {
@@ -63,16 +72,36 @@ class AlbumVH(
             singer.text = albumItem.artist
             year.text = albumItem.published
             genre.text = albumItem.genre
+            buttonPlayPause.isChecked = albumItem.play
+
+            buttonPlayPause.setOnClickListener {
+                onClickListener.play(null)
+            }
+
+            buttonNext.setOnClickListener {
+                onClickListener.next()
+            }
+
+            buttonPrevious.setOnClickListener {
+                onClickListener.previous()
+            }
         }
     }
 
 }
 
 class TrackVH(
-    private val binding: CardTrackBinding
+    private val binding: CardTrackBinding,
+    private val onClickListener: OnClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(trackItem: TrackItem) {
-        binding.trackName.text = trackItem.file
+        with(binding) {
+            trackName.text = trackItem.file
+            buttonPlayPause.isChecked = trackItem.play
+            buttonPlayPause.setOnClickListener {
+                onClickListener.play(trackItem)
+            }
+        }
     }
 
 }

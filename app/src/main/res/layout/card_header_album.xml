@@ -68,7 +68,7 @@
         tools:text="genre" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonBefore"
+        android:id="@+id/buttonPrevious"
         style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -83,10 +83,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        app:icon="@drawable/ic_play_arrow"
-        app:layout_constraintBottom_toBottomOf="@id/buttonBefore"
-        app:layout_constraintStart_toEndOf="@id/buttonBefore"
-        app:layout_constraintTop_toTopOf="@id/buttonBefore" />
+        android:checkable="true"
+        app:icon="@drawable/selector_play_pause"
+        app:layout_constraintBottom_toBottomOf="@id/buttonPrevious"
+        app:layout_constraintStart_toEndOf="@id/buttonPrevious"
+        app:layout_constraintTop_toTopOf="@id/buttonPrevious" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonNext"
@@ -107,7 +108,7 @@
         android:layout_marginBottom="4dp"
         android:text="@string/tracks"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/buttonBefore"
-        app:layout_constraintTop_toBottomOf="@id/buttonBefore" />
+        app:layout_constraintStart_toStartOf="@id/buttonPrevious"
+        app:layout_constraintTop_toBottomOf="@id/buttonPrevious" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

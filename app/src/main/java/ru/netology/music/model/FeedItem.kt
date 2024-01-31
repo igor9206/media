@@ -11,9 +11,11 @@ data class AlbumItem(
     val published: String,
     val subtitle: String,
     val title: String,
+    var play: Boolean = false
 ) : FeedItem
 
 data class TrackItem(
     override val id: Int,
     val `file`: String,
+    var play: Boolean = false
 ) : FeedItem
